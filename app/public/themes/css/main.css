@@ -223,41 +223,8 @@ section#footer-bar h4 {
 	font-weight:normal;
 	margin: 10px 0 18px;
 }
-section#footer-bar .social_icons a {
-	display: block;
-	float: left;
-	width: 29px;
-	height: 28px;
-	text-indent: -9999px;
-	background-image: url('../images/social-icons.png');
-	background-repeat: no-repeat;
-	margin-right: 10px;
-	-webkit-transition: all 0.4s;
-	-moz-transition: all 0.4s;
-	-o-transition: all 0.4s;
-	-ms-transition: all 0.4s;
-	transition: all 0.4s;
-}
-section#footer-bar .social_icons a.facebook:hover {
-	background-position: 0 -29px;
-}
-section#footer-bar .social_icons a.twitter {
-	background-position: -38px 0;
-}
-section#footer-bar .social_icons a.twitter:hover {
-	background-position: -38px -29px;
-}
-section#footer-bar .social_icons a.skype {
-	background-position: -76px 0;
-}
-section#footer-bar .social_icons a.skype:hover {
-	background-position: -76px -29px;
-}
-section#footer-bar .social_icons a.vimeo {
-	background-position: -115px 0;
-}
-section#footer-bar .social_icons a.vimeo:hover {
-	background-position: -115px -29px;
+.social_icons a i {
+    font-size: 25px;
 }
 section#copyright{
 	background-color:#111111;

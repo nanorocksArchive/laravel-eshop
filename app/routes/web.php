@@ -13,17 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::get('/auth', [\App\Http\Controllers\AuthController::class, 'index'])->name('index.auth');
 
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('index.home');
 
 Route::get('/cart', [\App\Http\Controllers\CartController::class, 'index'])->name('index.cart');
+Route::get('/cart/add/{slug}/{quantity}', [\App\Http\Controllers\CartController::class, 'add'])->name('add.cart');
+Route::get('/cart/update/{slug}/{quantity}', [\App\Http\Controllers\CartController::class, 'update'])->name('update.cart');
 
 Route::get('/checkout', [\App\Http\Controllers\CheckoutController::class, 'index'])->name('index.checkout');
+Route::post('/checkout', [\App\Http\Controllers\CheckoutController::class, 'order'])->name('order.checkout');
 
 Route::get('/products/{slug}', [\App\Http\Controllers\ProductController::class, 'index'])->name('index.product');
 

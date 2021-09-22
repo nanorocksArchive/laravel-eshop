@@ -41,23 +41,31 @@
                         <address>
                             <h1>{{ $product->title }}</h1>
                             <strong>Category: <span>Apple</span></strong><br><br>
+                            @if($product->hasLowerStock())
+                                <p class="badge badge-warning">Low Stock</p><br>
+                            @endif
+                            @if($product->outOfStock())
+                                <p class="badge badge-important">Out of stock</p><br>
+                            @endif
                             <strong>SKU:</strong> <span>{{ $product->slug }}</span><br>
                             <strong>Brand:</strong> <span>Apple</span><br>
-                            <strong>Availability:</strong> <span>{{ $product->stock != 0 ?:'Out Of Stock' }}</span><br>
                         </address>
                         <h4><strong>Price: ${{ $product->price }}</strong></h4>
                     </div>
                     <div class="span5">
                         <form class="form-inline">
-
                             <br/>
                             <label class="checkbox">
                                 <input type="checkbox" value=""> Be sure to include why it's great
                             </label>
                             <p>&nbsp;</p>
                             <label>Qty:</label>
-                            <input type="text" class="span1" placeholder="1">
-                            <button class="btn btn-inverse" type="submit">Add to cart</button>
+                            <input type="number" min="1" max="{{ $product->stock }}" placeholder="1" class="input-mini" id="input-quantity" value="1">
+                            <button class="btn btn-inverse" onclick="Swal.fire(
+                                'Good job!',
+                                'You added your product to cart!',
+                                'success'
+                                ); window.location.href='/cart/add/{{$product->slug}}/' + document.getElementById('input-quantity').value">Add to cart</button>
                         </form>
                     </div>
                 </div>
@@ -81,7 +89,6 @@
                                                 <td>{{ implode(" | ", $attribute) }}</td>
                                             </tr>
                                         @endforeach
-
                                         </tbody>
                                     </table>
                                 </div>

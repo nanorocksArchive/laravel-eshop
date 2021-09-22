@@ -15,10 +15,12 @@ class CreateAddressesTable extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
-            $table->string('address1');
-            $table->string('address2');
-            $table->string('city');
-            $table->string('postal_code');
+            $table->string(\App\Models\Address::ADDRESS1);
+            $table->string(\App\Models\Address::ADDRESS2);
+            $table->string(\App\Models\Address::STATE);
+            $table->string(\App\Models\Address::COUNTRY);
+            $table->string(\App\Models\Address::POST_CODE);
+            $table->string(\App\Models\Address::CITY);
             $table->timestamps();
         });
     }

@@ -2,10 +2,14 @@
 
 namespace App\Providers;
 
+use App\Basket\Basket;
+use App\Support\Storage\CartStorage;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
+
     /**
      * Register any application services.
      *
@@ -13,7 +17,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+//        $this->app->singleton(Basket::class, function ($app) {
+//            $basket = new Basket();
+//
+//            View::share('basket', $basket);
+//
+//            return $basket;
+//        });
     }
 
     /**
@@ -23,6 +33,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        CartStorage::init();
     }
 }

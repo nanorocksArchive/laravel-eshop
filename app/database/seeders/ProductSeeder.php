@@ -27,8 +27,8 @@ class ProductSeeder extends Seeder
         ]);
 
         Product::create([
-            Product::TITLE => 'QUIS NOSTRUD EXERCI TATION',
-            Product::SLUG => 'QUIS-NOSTRUD-EXERCI-TATION',
+            Product::TITLE => 'QUIS NOSTRUD EXERCI TATION-5',
+            Product::SLUG => 'QUIS-NOSTRUD-EXERCI-TATION-5',
             Product::DESCRIPTION => self::DESCRIPTION,
             Product::PRICE => '40.25',
             Product::IMAGE => 'themes/images/ladies/2.jpg',
@@ -37,7 +37,7 @@ class ProductSeeder extends Seeder
 
         Product::create([
             Product::TITLE => 'KNOW EXACTLY TURNED',
-            Product::SLUG => 'KNOW-EXACTLY-TURNED',
+            Product::SLUG => 'KNOW-EXACTLY-TURNED-3',
             Product::DESCRIPTION => self::DESCRIPTION,
             Product::PRICE => '587.50',
             Product::IMAGE => 'themes/images/ladies/3.jpg',
@@ -45,8 +45,8 @@ class ProductSeeder extends Seeder
         ]);
 
         Product::create([
-            Product::TITLE => 'YOU THINK FAST',
-            Product::SLUG => 'YOU-THINK-FAST',
+            Product::TITLE => 'YOU THINK FAST 1',
+            Product::SLUG => 'YOU-THINK-FAST-1',
             Product::DESCRIPTION => self::DESCRIPTION,
             Product::PRICE => '587.50',
             Product::IMAGE => 'themes/images/ladies/4.jpg',
@@ -55,8 +55,8 @@ class ProductSeeder extends Seeder
         ]);
 
         Product::create([
-            Product::TITLE => 'UT WISI ENIM AD',
-            Product::SLUG => 'UT-WISI-ENIM-AD',
+            Product::TITLE => 'UT WISI ENIM AD 1',
+            Product::SLUG => 'UT-WISI-ENIM-AD-1',
             Product::DESCRIPTION => self::DESCRIPTION,
             Product::PRICE => '587.50',
             Product::IMAGE => 'themes/images/ladies/5.jpg',
@@ -64,8 +64,8 @@ class ProductSeeder extends Seeder
         ]);
 
         Product::create([
-            Product::TITLE => 'UT WISI ENIM AD',
-            Product::SLUG => 'UT-WISI-ENIM-AD',
+            Product::TITLE => 'UT WISI ENIM AD 2',
+            Product::SLUG => 'UT-WISI-ENIM-AD-2',
             Product::DESCRIPTION => self::DESCRIPTION,
             Product::PRICE => '587.50',
             Product::IMAGE => 'themes/images/ladies/6.jpg',
@@ -74,8 +74,8 @@ class ProductSeeder extends Seeder
         ]);
 
         Product::create([
-            Product::TITLE => 'KNOW EXACTLY TURNED',
-            Product::SLUG => 'KNOW-EXACTLY-TURNED',
+            Product::TITLE => 'KNOW EXACTLY TURNED 2',
+            Product::SLUG => 'KNOW-EXACTLY-TURNED-2',
             Product::DESCRIPTION => self::DESCRIPTION,
             Product::PRICE => '587.50',
             Product::IMAGE => 'themes/images/ladies/7.jpg',
@@ -84,8 +84,8 @@ class ProductSeeder extends Seeder
         ]);
 
         Product::create([
-            Product::TITLE => 'UT WISI ENIM AD',
-            Product::SLUG => 'UT-WISI-ENIM-AD',
+            Product::TITLE => 'UT WISI ENIM AD 11',
+            Product::SLUG => 'UT-WISI-ENIM-AD-11',
             Product::DESCRIPTION => self::DESCRIPTION,
             Product::PRICE => '587.50',
             Product::IMAGE => 'themes/images/ladies/8.jpg',

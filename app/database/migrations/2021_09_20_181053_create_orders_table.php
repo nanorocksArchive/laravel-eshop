@@ -15,11 +15,12 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('hash');
-            $table->float('total');
-            $table->string('address_id');
-            $table->boolean('paid')->default(false);
-            $table->bigInteger('customer_id');
+            $table->string(\App\Models\Order::HASH);
+            $table->float(\App\Models\Order::TOTAL);
+            $table->boolean(\App\Models\Order::PAID)->default(false);
+            $table->bigInteger(\App\Models\Order::ADDRESS_ID);
+            $table->bigInteger(\App\Models\Order::CUSTOMER_ID);
+            $table->string(\App\Models\Order::COMMENT)->nullable();
             $table->timestamps();
         });
     }
