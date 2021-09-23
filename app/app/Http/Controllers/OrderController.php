@@ -19,7 +19,7 @@ class OrderController extends Controller
             ->join('addresses', 'orders.address_id', '=', 'addresses.id')
             ->join('customers', 'orders.customer_id', '=', 'customers.id')
             ->first();
-        
+
         $products = OrderProduct::where(OrderProduct::ORDER_ID, $order->id)
             ->join('products', 'products.id', '=', 'orders_products.product_id')
             ->get();
