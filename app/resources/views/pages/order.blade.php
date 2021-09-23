@@ -1,6 +1,6 @@
 @extends('layout.master')
 @section('title')
-    Checkout
+    Order details
 @stop
 @section('sidebar')
 @stop
@@ -9,7 +9,7 @@
 @section('content')
     <section class="header_text sub">
         <img class="pageBanner" src="{{ asset('themes/images/pageBanner.png') }}" alt="New products">
-        <h4><span>Shopping Cart</span></h4>
+        <h4><span>Order details</span></h4>
     </section>
     <section class="main-content">
         <div class="row">
@@ -23,7 +23,7 @@
                                 <div class="control-group">
                                     <label class="control-label">First Name</label>
                                     <div class="controls">
-                                        <input type="text" name="firstname" placeholder="First name" value="Andrej">
+                                        <input type="text" name="firstname" placeholder="First name" value="{{ $order->firstname }}">
                                     </div>
                                 </div>
                             </div>
@@ -31,7 +31,7 @@
                                 <div class="control-group">
                                     <label class="control-label">Last Name</label>
                                     <div class="controls">
-                                        <input type="text" name="lastname" placeholder="Last name" value="Nankov">
+                                        <input type="text" name="lastname" placeholder="Last name" value="{{ $order->lastname }}">
                                     </div>
                                 </div>
                             </div>
@@ -41,7 +41,7 @@
                                 <div class="control-group">
                                     <label class="control-label">Email Address</label>
                                     <div class="controls">
-                                        <input type="text" name="email" placeholder="Email" value="an@gmail.com">
+                                        <input type="text" name="email" placeholder="Email" value="{{ $order->email }}">
                                     </div>
                                 </div>
                             </div>
@@ -49,7 +49,7 @@
                                 <div class="control-group">
                                     <label class="control-label">Telephone</label>
                                     <div class="controls">
-                                        <input type="text" name="phone" placeholder="Telephone" value="07123321">
+                                        <input type="text" name="phone" placeholder="Telephone" value="{{ $order->phone }}">
                                     </div>
                                 </div>
                             </div>
@@ -60,7 +60,7 @@
                                     <label class="control-label"><span class="required">*</span> Street:</label>
                                     <div class="controls">
                                         <input type="text" name="address1" placeholder="Street"
-                                               value="ul. Hristo Tatarcev">
+                                               value="{{ $order->address_1 }}">
                                     </div>
                                 </div>
                             </div>
@@ -68,7 +68,7 @@
                                 <div class="control-group">
                                     <label class="control-label">Street number:</label>
                                     <div class="controls">
-                                        <input type="text" name="address2" placeholder="Street number" value="47-5/14">
+                                        <input type="text" name="address2" placeholder="Street number" value="{{ $order->address_2 }}">
                                     </div>
                                 </div>
                             </div>
@@ -78,7 +78,7 @@
                                 <div class="control-group">
                                     <label class="control-label"><span class="required">*</span> City:</label>
                                     <div class="controls">
-                                        <input type="text" name="city" placeholder="City" value="Skopje">
+                                        <input type="text" name="city" placeholder="City" value="{{ $order->city }}">
                                     </div>
                                 </div>
                             </div>
@@ -86,7 +86,7 @@
                                 <div class="control-group">
                                     <label class="control-label"><span class="required">*</span> Post Code:</label>
                                     <div class="controls">
-                                        <input type="text" name="post_code" placeholder="Post code" value="1000">
+                                        <input type="text" name="post_code" placeholder="Post code" value="{{ $order->post_code }}">
                                     </div>
                                 </div>
                             </div>
@@ -97,12 +97,12 @@
                                     <label class="control-label"><span class="required">*</span> Country:</label>
                                     <div class="controls">
                                         <select name="country">
-                                            <option value="Macedonia" selected>Macedonia</option>
-                                            <option value="2">Albania</option>
-                                            <option value="3">Algeria</option>
-                                            <option value="4">American Samoa</option>
-                                            <option value="5">Andorra</option>
-                                            <option value="6">Angola</option>
+                                            @php
+                                                $dummyData = ['2' => 'Albania', 'Macedonia' => 'Macedonia', '3' => 'Angola'];
+                                            @endphp
+                                            @foreach($dummyData as $key => $option)
+                                                <option value="{{ $key }}" {{ ( $order->country == $key) ? 'selected' : '' }}>{{ $option }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -112,12 +112,12 @@
                                     <label class="control-label"><span class="required">*</span> Region / State:</label>
                                     <div class="controls">
                                         <select name="state">
-                                            <option value=""> --- Please Select ---</option>
-                                            <option value="kisela-voda" selected>Kisela voda</option>
-                                            <option value="3514">Aberdeenshire</option>
-                                            <option value="3515">Anglesey</option>
-                                            <option value="3516">Angus</option>
-                                            <option value="3517">Argyll and Bute</option>
+                                            @php
+                                                $dummyData = ['' => '--- Please Select ---', 'kisela-voda' => 'Kisela voda', '3514' => 'Aberdeenshire'];
+                                            @endphp
+                                            @foreach($dummyData as $key => $option)
+                                                <option value="{{ $key }}" {{ ( $order->state == $key) ? 'selected' : '' }}>{{ $option }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -128,23 +128,8 @@
                                 <label for="textarea" class="control-label">Comments</label>
                                 <div class="controls">
                                     <textarea rows="3" id="textarea" name="comment" placeholder="Enter comment ..."
-                                              class="span12">I want fast shipment</textarea>
+                                              class="span12">{{ $order->comment }}</textarea>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row-fluid">
-                            <div class="control-group">
-                                <label class="checkbox">
-                                    <input type="checkbox" name="receiveEmailNotifications" id="email-check"
-                                           value="option1" checked>
-                                    Receive email notifications for news and discounts
-                                </label>
-                            </div>
-                            <div class="control-group">
-                                <label class="checkbox">
-                                    <input type="checkbox" name="createAccount" id="email-check" value="option1">
-                                    Do you want to create account ?
-                                </label>
                             </div>
                         </div>
                     </div>
@@ -162,7 +147,7 @@
                             @php
                                 $sumSubTotal = 0;
                             @endphp
-                            @foreach($basket as $product)
+                            @foreach($products as $product)
                                 <tr>
                                     <td>{{ $product->title }} <strong>X {{ $product->quantity }}</strong></td>
                                     <td>${{ $product->price * $product->quantity }}</td>
@@ -194,14 +179,7 @@
                             Pay when arrive
                         </label>
                         <hr>
-                        <div class="row-fluid">
-                            <div id="dropin-container"></div>
-                            <hr>
-                            <button class="btn btn-inverse pull-right" type="button" id="submitButton">Confirm order
-                                <span class="d-none" id="submitButtonSpinner"><i class="fas fa-spinner"></i></span>
-                            </button>
-                            @csrf
-                        </div>
+
                     </div>
                 </form>
             </div>
@@ -210,97 +188,11 @@
 @stop
 @section('js')
     @parent
-    <script src="{{ asset('themes/js/common.js') }}"></script>
     <script>
-
-        function getPaymentToken() {
-            fetch('{{ route('order.checkout.paymentToken') }}', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({"_token": "{{ csrf_token() }}"})
-            })
-            .then(res => res.json())
-            .then(res => {
-                paymentIntegration(res.token);
-            });
-        }
-
-        function paymentIntegration(token) {
-            braintree.dropin.create({
-                authorization: token,
-                selector: '#dropin-container'
-            }, function (err, instance) {
-                document.getElementById('submitButton').addEventListener('click', () => {
-                    document.getElementById('submitButtonSpinner').classList.remove('d-none');
-                    let form = document.getElementById('orderForm');
-                    let formData = Array.from(new FormData(form))
-                    let body = {}
-                    for (const item in formData) {
-                        body[formData[item][0]] = formData[item][1];
-                        document.getElementsByName(formData[item][0])[0].setAttribute("disabled", "")
-                    }
-
-                    makePaymentRequest(body, err, instance)
-                });
-
-            })
-        }
-
-        function makePaymentRequest(body, err, instance) {
-            instance.requestPaymentMethod((err, payload) => {
-                console.log(payload);
-                fetch('{{ route('order.checkout') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({'paymentMethodNonce': payload.nonce, ...body})
-                }).then(res => {
-                    return res.json();
-                }).then(result => {
-                    console.log(result);
-                    instance.teardown(function (teardownErr) {
-                        if (teardownErr) {
-                            console.error('Could not tear down Drop-in UI!');
-                        } else {
-                            console.info('Drop-in UI has been torn down!');
-
-                            document.getElementById('submitButton').remove();
-                        }
-                    });
-
-                    if (result.status == 200) {
-                        Swal.fire(
-                            'Good job!',
-                            result.message,
-                            'success'
-                        )
-
-                        setTimeout(() => {
-                            window.location.href = result.href;
-                        }, 5000);
-                    } else {
-                        Swal.fire(
-                            'Try again!',
-                            result.message,
-                            'error'
-                        )
-
-                        setTimeout(() => {
-                            window.location.href = "{{ route('index.home') }}";
-                        }, 5000);
-                    }
-                })
-
-            });
-        }
-
-        window.onload = () => {
-            getPaymentToken();
+        let form = document.getElementById('orderForm');
+        let formData = Array.from(new FormData(form))
+        for (const item in formData) {
+            document.getElementsByName(formData[item][0])[0].setAttribute("disabled", "")
         }
     </script>
 @stop

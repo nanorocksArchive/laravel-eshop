@@ -119,6 +119,7 @@
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/psr/event-dispatcher" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/psr/simple-cache" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/psr/http-factory" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/braintree/braintree_php" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

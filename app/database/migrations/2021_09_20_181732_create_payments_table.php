@@ -15,9 +15,9 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('order_id');
-            $table->boolean('failed');
-            $table->string('transaction_id');
+            $table->bigInteger(\App\Models\Payment::ORDER_ID);
+            $table->boolean(\App\Models\Payment::FAILED)->default(true);
+            $table->string(\App\Models\Payment::TRANSACTION_ID);
             $table->timestamps();
         });
     }

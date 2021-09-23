@@ -23,6 +23,9 @@ Route::get('/cart/update/{slug}/{quantity}', [\App\Http\Controllers\CartControll
 
 Route::get('/checkout', [\App\Http\Controllers\CheckoutController::class, 'index'])->name('index.checkout');
 Route::post('/checkout', [\App\Http\Controllers\CheckoutController::class, 'order'])->name('order.checkout');
+Route::post('/checkout/token', [\App\Http\Controllers\CheckoutController::class, 'getPaymentToken'])->name('order.checkout.paymentToken');
+
+Route::get('/order/{hash}', [\App\Http\Controllers\OrderController::class, 'index'])->name('order.index');
 
 Route::get('/products/{slug}', [\App\Http\Controllers\ProductController::class, 'index'])->name('index.product');
 

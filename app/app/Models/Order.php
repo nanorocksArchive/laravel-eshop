@@ -16,7 +16,7 @@ class Order extends Model
     const TOTAL = 'total';
     const PAID = 'paid';
     const ADDRESS_ID = 'address_id';
-    const CUSTOMER_ID = 'customer_ID';
+    const CUSTOMER_ID = 'customer_id';
     const COMMENT = 'comment';
 
     protected $fillable = [
@@ -36,5 +36,10 @@ class Order extends Model
     public function products()
     {
         return $this->belongsToMany(Product::class, 'orders_products')->withPivot('quantity');
+    }
+
+    public function payment(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Payment::class);
     }
 }

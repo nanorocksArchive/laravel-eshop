@@ -10,4 +10,15 @@ class Payment extends Model
     use HasFactory;
 
     protected $table = 'payments';
+
+    const ORDER_ID = 'order_id';
+    const FAILED = 'failed';
+    const TRANSACTION_ID = 'transaction_id';
+
+    protected $fillable = [
+        self::ORDER_ID,
+        self::FAILED,
+        self::TRANSACTION_ID
+    ];
+
 }

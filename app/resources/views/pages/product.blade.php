@@ -60,8 +60,8 @@
                             </label>
                             <p>&nbsp;</p>
                             <label>Qty:</label>
-                            <input type="number" min="1" max="{{ $product->stock }}" placeholder="1" class="input-mini" id="input-quantity" value="1">
-                            <button class="btn btn-inverse" onclick="Swal.fire(
+                            <input type="number" min="1" max="{{ $product->stock }}" placeholder="1" class="input-mini" id="input-quantity" value="1" @if($product->outOfStock()) disabled='disabled' @endif>
+                            <button class="btn btn-inverse" @if($product->outOfStock()) disabled='disabled' @endif onclick="Swal.fire(
                                 'Good job!',
                                 'You added your product to cart!',
                                 'success'
