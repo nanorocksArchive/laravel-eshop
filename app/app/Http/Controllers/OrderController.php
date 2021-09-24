@@ -20,6 +20,11 @@ class OrderController extends Controller
             ->join('customers', 'orders.customer_id', '=', 'customers.id')
             ->first();
 
+        if(is_null($order))
+        {
+            return redirect()->route('index.home');
+        }
+
         $products = OrderProduct::where(OrderProduct::ORDER_ID, $order->id)
             ->join('products', 'products.id', '=', 'orders_products.product_id')
             ->get();

@@ -17,13 +17,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-//        $this->app->singleton(Basket::class, function ($app) {
-//            $basket = new Basket();
-//
-//            View::share('basket', $basket);
-//
-//            return $basket;
-//        });
     }
 
     /**

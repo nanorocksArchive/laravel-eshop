@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/dashboard', function () {
+    return view('pages.admin.dashboard');
+})->middleware(['auth']);
+
 Route::get('/auth', [\App\Http\Controllers\AuthController::class, 'index'])->name('index.auth');
 
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('index.home');
