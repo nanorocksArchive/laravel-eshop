@@ -4,16 +4,24 @@
     "description": "The Laravel Framework.",
     "keywords": ["framework", "laravel"],
     "license": "MIT",
+    "repositories": [
+        {
+            "type": "artifact",
+            "url": "artifacts/"
+        }
+    ],
     "require": {
         "php": "^7.4",
         "braintree/braintree_php": "6.4.1",
         "fruitcake/laravel-cors": "^2.0",
+        "grocerycrud/enterprise": "2.*.*",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/fortify": "^1.8",
         "laravel/framework": "^8.54",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "stripe/stripe-php": "^7.97"
+        "stripe/stripe-php": "^7.97",
+        "vlucas/valitron": "^1.4"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

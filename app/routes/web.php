@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,10 +13,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/dashboard', function () {
-    return view('pages.admin.dashboard');
-})->middleware(['auth']);
 
 Route::get('/auth', [\App\Http\Controllers\AuthController::class, 'index'])->name('index.auth');
 
@@ -38,3 +35,26 @@ Route::get('/shop', [\App\Http\Controllers\ShopController::class, 'index'])->nam
 Route::get('/contact', [\App\Http\Controllers\StaticPageController::class, 'contact'])->name('index.contact');
 
 Route::get('/about', [\App\Http\Controllers\StaticPageController::class, 'about'])->name('index.about');
+
+// Admin
+
+Route::get('/dashboard', function () {
+    return redirect()->route('admin.orders.index');
+})->middleware(['auth']);
+
+Route::group(['prefix'=>'admin','as'=>'admin.', 'middleware' => ['auth:web']], function(){
+    Route::get('/orders', [AdminController::class, 'orders'])->name('orders.index');
+    Route::get('/orders/{operation}', [AdminController::class, 'orders']);
+    Route::get('/orders/{operation}/{id}', [AdminController::class, 'orders']);
+    Route::post('/orders', [AdminController::class, 'orders']);
+    Route::post('/orders/{operation}', [AdminController::class, 'orders']);
+    Route::post('/orders/{operation}/{id}', [AdminController::class, 'orders']);
+
+
+    Route::get('/products', [AdminController::class, 'products'])->name('products.index');
+    Route::get('/products/{operation}', [AdminController::class, 'products']);
+    Route::get('/products/{operation}/{id}', [AdminController::class, 'products']);
+    Route::post('/products', [AdminController::class, 'products']);
+    Route::post('/products/{operation}', [AdminController::class, 'products']);
+    Route::post('/products/{operation}/{id}', [AdminController::class, 'products']);
+});
