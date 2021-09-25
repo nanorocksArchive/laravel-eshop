@@ -10,6 +10,8 @@ use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Payment\BrainTree;
+use App\Payment\PaymentGateway;
+use App\Payment\Stripe;
 use Illuminate\Http\Request;
 
 class CheckoutController extends Controller
@@ -17,12 +19,12 @@ class CheckoutController extends Controller
 
     protected $basket;
 
-    protected $brainTree;
+    protected $paymentGateway;
 
-    public function __construct(Basket $basket, BrainTree $brainTree)
+    public function __construct(Basket $basket, BrainTree $brainTree, Stripe $stripe)
     {
         $this->basket = $basket;
-        $this->brainTree = $brainTree;
+        $this->paymentGateway = new PaymentGateway($brainTree, $stripe);
     }
 
     public function index()
@@ -42,10 +44,10 @@ class CheckoutController extends Controller
     /**
      * @return array
      */
-    public function getPaymentToken(): array
+    public function getPaymentToken(Request $request): array
     {
         return [
-            'token' => $this->brainTree->generateToken()
+            'token' => $this->paymentGateway->generateToken($request)
         ];
     }
 
@@ -53,8 +55,8 @@ class CheckoutController extends Controller
     public function order(Request $request)
     {
         // TODO validate order
-
-        if(!$request->paymentMethodNonce){
+        if($request->type === PaymentGateway::BRAIN_TREE && !$request->paymentMethodNonce)
+        {
             return redirect()->to('/cart');
         }
 
@@ -94,7 +96,30 @@ class CheckoutController extends Controller
             ]);
         }
 
-        $result = $this->brainTree->makePayment($request, $order->total);
+        if($request->type === PaymentGateway::STRIPE)
+        {
+            if(isset($request->success['type']) && $request->success['type'] == 'card_error')
+            {
+                event(new OrderFailed($order));
+
+                return [
+                    'status' => 500,
+                    'message' => $request->success['message']
+                ];
+            }
+
+
+            event(new OrderWasCreated($order, $this->basket, $customer, $request->paymentId));
+
+            return [
+                'status' => 200,
+                'message' => 'Order successful !!!',
+                'href' => route('order.index', $hash)
+            ];
+        }
+
+
+        $result = $this->paymentGateway->makePayment($request, $order->total);
 
         if(!$result->success)
         {

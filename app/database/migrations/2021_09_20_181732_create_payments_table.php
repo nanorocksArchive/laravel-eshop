@@ -17,7 +17,7 @@ class CreatePaymentsTable extends Migration
             $table->id();
             $table->bigInteger(\App\Models\Payment::ORDER_ID);
             $table->boolean(\App\Models\Payment::FAILED)->default(true);
-            $table->string(\App\Models\Payment::TRANSACTION_ID);
+            $table->string(\App\Models\Payment::TRANSACTION_ID)->nullable()->default(null);
             $table->timestamps();
         });
     }

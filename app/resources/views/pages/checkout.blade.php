@@ -161,6 +161,7 @@
                             <tbody>
                             @php
                                 $sumSubTotal = 0;
+                                $productIds = [];
                             @endphp
                             @foreach($basket as $product)
                                 <tr>
@@ -169,6 +170,7 @@
                                 </tr>
                                 @php
                                     $sumSubTotal += $product->price * $product->quantity;
+                                    array_push($productIds, ['id' => $product->id]);
                                 @endphp
                             @endforeach
                             <tr>
@@ -178,6 +180,7 @@
                             <tr style="font-size: 1.2rem;">
                                 <td><strong>Total:</strong></td>
                                 <td style="font-weight: 900">${{ $sumSubTotal + 15.00 }}</td>
+                                <input type="hidden" id="productIds" value="{{ json_encode($productIds,TRUE)}}">
                             </tr>
                             </tbody>
                         </table>
@@ -195,12 +198,41 @@
                         </label>
                         <hr>
                         <div class="row-fluid">
+                            <div class="span12">
+                                <div class="control-group">
+                                    <label class="control-label">Payment gateway</label>
+                                    <div class="controls">
+                                        <select id="paymentGateway" style="width: 100%">
+                                            <option value="braintree" selected>BrainTree</option>
+                                            <option value="stripe">Stripe</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row-fluid d-none" id="brainTreeBlock">
                             <div id="dropin-container"></div>
                             <hr>
                             <button class="btn btn-inverse pull-right" type="button" id="submitButton">Confirm order
                                 <span class="d-none" id="submitButtonSpinner"><i class="fas fa-spinner"></i></span>
                             </button>
                             @csrf
+                        </div>
+                        <div class="row-fluid" id="stripeBlock">
+                            <form id="stripePaymentForm">
+                                <div id="card-element"><!--Stripe.js injects the Card Element--></div>
+                                <hr>
+                                <button class="btn btn-inverse pull-right" type="button" id="stripeSubmit">
+                                    <span id="stripeButtonText">Confirm order Stripe</span>
+                                    <span class="spinner d-none" id="stripeSpinner"><i class="fas fa-spinner"></i></span>
+                                </button>
+                                <div id="stripeCardError" role="alert"></div>
+                                <p class="result-message hidden">
+                                    Payment succeeded, see the result in your
+                                    <a href="" target="_blank">Stripe dashboard.</a> Refresh the page to pay again.
+                                </p>
+                            </form>
                         </div>
                     </div>
                 </form>
@@ -210,59 +242,68 @@
 @stop
 @section('js')
     @parent
+    <script src="https://js.braintreegateway.com/web/dropin/1.31.2/js/dropin.min.js"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+
     <script src="{{ asset('themes/js/common.js') }}"></script>
     <script>
 
-        function getPaymentToken() {
+        function getPaymentTokenBrainTree() {
             fetch('{{ route('order.checkout.paymentToken') }}', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({"_token": "{{ csrf_token() }}"})
+                body: JSON.stringify({"type": 'braintree', "_token": "{{ csrf_token() }}"})
             })
-            .then(res => res.json())
-            .then(res => {
-                paymentIntegration(res.token);
-            });
+                .then(res => res.json())
+                .then(res => {
+                    paymentIntegrationBrainTree(res.token);
+                });
         }
 
-        function paymentIntegration(token) {
+        function paymentIntegrationBrainTree(token) {
             braintree.dropin.create({
                 authorization: token,
                 selector: '#dropin-container'
             }, function (err, instance) {
                 document.getElementById('submitButton').addEventListener('click', () => {
                     document.getElementById('submitButtonSpinner').classList.remove('d-none');
-                    let form = document.getElementById('orderForm');
-                    let formData = Array.from(new FormData(form))
-                    let body = {}
-                    for (const item in formData) {
-                        body[formData[item][0]] = formData[item][1];
-                        document.getElementsByName(formData[item][0])[0].setAttribute("disabled", "")
-                    }
 
-                    makePaymentRequest(body, err, instance)
+                    let body = getFormContent();
+                    makePaymentRequestBrainTree(body, err, instance)
                 });
 
             })
         }
 
-        function makePaymentRequest(body, err, instance) {
+        function getFormContent(disabled = true)
+        {
+            let form = document.getElementById('orderForm');
+            let formData = Array.from(new FormData(form))
+            let body = {}
+            for (const item in formData) {
+                body[formData[item][0]] = formData[item][1];
+                // document.getElementsByName(formData[item][0])[0].setAttribute("disabled", "")
+            }
+
+            return body;
+        }
+
+        function makePaymentRequestBrainTree(body, err, instance) {
             instance.requestPaymentMethod((err, payload) => {
-                console.log(payload);
                 fetch('{{ route('order.checkout') }}', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({'paymentMethodNonce': payload.nonce, ...body})
+                    body: JSON.stringify({"type": 'braintree', "_token": "{{ csrf_token() }}", 'paymentMethodNonce': payload.nonce, ...body})
                 }).then(res => {
                     return res.json();
                 }).then(result => {
-                    console.log(result);
                     instance.teardown(function (teardownErr) {
                         if (teardownErr) {
                             console.error('Could not tear down Drop-in UI!');
@@ -299,8 +340,163 @@
             });
         }
 
+        function getPaymentTokenStripe() {
+
+            let stripe = Stripe("{{ env('STRIPE_PUBLIC_KEY') }}");
+
+            document.getElementById("stripeSubmit").disabled = true;
+
+            fetch("{{ route('order.checkout.paymentToken') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    "type": 'stripe',
+                    "items": document.getElementById('productIds').value,
+                    "_token": "{{ csrf_token() }}"
+                })
+            }).then(result => result.json())
+                .then(function (data) {
+                    let elements = stripe.elements();
+                    let style = {
+                        base: {
+                            color: "#32325d",
+                            fontFamily: 'Arial, sans-serif',
+                            fontSmoothing: "antialiased",
+                            fontSize: "16px",
+                            "::placeholder": {
+                                color: "#32325d"
+                            }
+                        },
+                        invalid: {
+                            fontFamily: 'Arial, sans-serif',
+                            color: "#fa755a",
+                            iconColor: "#fa755a"
+                        }
+                    };
+                    var card = elements.create("card", {style: style});
+                    // Stripe injects an iframe into the DOM
+                    card.mount("#card-element");
+                    card.on("change", function (event) {
+                        // Disable the Pay button if there are no card details in the Element
+                        document.getElementById("stripeSubmit").disabled = event.empty;
+                        document.querySelector("#stripeCardError").textContent = event.error ? event.error.message : "";
+                    });
+
+                    document.getElementById("stripeSubmit").addEventListener("click", function (e) {
+                        e.preventDefault();
+                        // Complete payment when the submit button is clicked
+                        paymentIntegrationStripe(stripe, card, data.token);
+                    });
+                });
+        }
+
+        function paymentIntegrationStripe(stripe, card, clientSecret) {
+            loading(true);
+            stripe
+                .confirmCardPayment(clientSecret, {
+                    payment_method: {
+                        card: card
+                    }
+                })
+                .then(function (result) {
+                    makePaymentRequestStripe(getFormContent(), result)
+                });
+        }
+
+        function loading(isLoading) {
+            if (isLoading) {
+                // Disable the button and show a spinner
+                document.querySelector("#stripeSubmit").disabled = true;
+                document.querySelector("#stripeSpinner").classList.remove("d-none");
+            } else {
+                document.querySelector("#stripeSubmit").disabled = false;
+                document.querySelector("#stripeSpinner").classList.add("d-none");
+            }
+        }
+
+        function showError(errorMsgText) {
+            loading(false);
+            var errorMsg = document.querySelector("#stripeCardError");
+            errorMsg.textContent = errorMsgText;
+            setTimeout(function() {
+                errorMsg.textContent = "";
+            }, 4000);
+        }
+
+        function makePaymentRequestStripe(body, paymentStatus) {
+            const paymentId = paymentStatus.error ? null : paymentStatus.paymentIntent.id;
+            fetch('{{ route('order.checkout') }}', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({"success": paymentStatus.error ,"paymentId": paymentId, "type": 'stripe', "_token": "{{ csrf_token() }}", ...body})
+            }).then(res => {
+                return res.json();
+            }).then(result => {
+                console.log(result,12312323);
+
+                if (!paymentStatus.error) {
+                    Swal.fire(
+                        'Good job!',
+                        result.message,
+                        'success'
+                    )
+
+                    orderComplete(paymentStatus.paymentIntent.id);
+
+                    setTimeout(() => {
+                        window.location.href = result.href;
+                    }, 5000);
+                } else {
+                    showError(paymentStatus.error.message);
+                    Swal.fire(
+                        'Try again!',
+                        result.message,
+                        'error'
+                    )
+                }
+            });
+        }
+
+        function orderComplete(paymentIntentId) {
+            loading(false);
+            document
+                .querySelector(".result-message a")
+                .setAttribute(
+                    "href",
+                    "https://dashboard.stripe.com/test/payments/" + paymentIntentId
+                );
+            document.querySelector(".result-message").classList.remove("hidden");
+            document.querySelector("#stripeSubmit").disabled = true;
+        }
+
+        function paymentGateway() {
+            let pg = document.getElementById('paymentGateway');
+            selectedPaymentGateway(pg);
+
+            pg.addEventListener('change', (e) => {
+                selectedPaymentGateway(pg);
+            })
+        }
+
+        function selectedPaymentGateway(pg) {
+            if (pg.value === 'braintree') {
+                document.getElementById('brainTreeBlock').classList.remove('d-none');
+                document.getElementById('stripeBlock').classList.add('d-none');
+                getPaymentTokenBrainTree();
+            } else {
+                document.getElementById('brainTreeBlock').classList.add('d-none');
+                document.getElementById('stripeBlock').classList.remove('d-none');
+                getPaymentTokenStripe();
+            }
+        }
+
         window.onload = () => {
-            getPaymentToken();
+            paymentGateway();
         }
     </script>
 @stop

@@ -2,14 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Basket\Basket;
-use App\Models\Address;
-use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderProduct;
-use App\Models\Payment;
-use App\Payment\BrainTree;
-use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {

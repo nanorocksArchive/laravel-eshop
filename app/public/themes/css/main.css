@@ -88,7 +88,6 @@ section#copyright{
 	margin-right: -10px;
 }
 section.header_text{
-	background:url('../images/bg_h.png') no-repeat bottom;
 	text-align:center;
 	padding:15px 0 20px 0;
 	font-size:16px;
@@ -213,9 +212,7 @@ section#footer-bar  a:hover{
 	color:#999;
 	text-decoration:underline;
 }
-section#footer-bar  .nav a{
-	background: url('../images/trigger_right.png') no-repeat 5px 7px;
-}
+
 section#footer-bar h4 {
 	padding: 0;
 	font-size: 16px;
@@ -392,7 +389,6 @@ section.navbar{
 	border-bottom:1px solid #eee;
 }
 .product-box span.sale_tag {
-	background: url('../images/sprites.png') no-repeat scroll 0 0 transparent;
 	height: 54px;
 	position: absolute;
 	width: 55px;
@@ -495,8 +491,7 @@ section.our_client .row{
 	margin-bottom:0;
 }
 .search_form input{
-	background: url('../images/search.png') #fff no-repeat 97% 6px;
-	color:#fff;
+	color:#1a1a1a;
 	text-shadow:none;
 	padding-right:25px;
 	border:1px solid #eee;
@@ -623,7 +618,6 @@ section.our_client .row{
 	margin-bottom:-30px;
 }
 .block h4{
-	background: url('../images/bg_h.png') no-repeat bottom left;
 	margin: 0 0 20px 0;
 	border-bottom:1px solid #eee;
 }
@@ -632,14 +626,13 @@ section.our_client .row{
 /* Navigation list */
 .nav-header{
 	color:#333;
-	background: url('../images/bg_h.png') no-repeat bottom left;
 	margin-bottom:10px;
 }
 .nav-list li{
 	text-align:left;
 }
 .nav-list li a{
-	background: url('../images/trigger_right.png') transparent no-repeat 5px 8px;
+
 }
 .nav-list > .active > a, .nav-list > .active > a:hover{
 	background-color: transparent;
@@ -745,4 +738,8 @@ section.our_client .row{
 	.feature_box .service{
 		border-bottom:1px solid #eee;
 	}
+}
+
+#footer-bar .nav li a:hover{
+    background: transparent !important;
 }

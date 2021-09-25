@@ -5,7 +5,7 @@ namespace App\Payment;
 use Braintree\Gateway;
 use Illuminate\Http\Request;
 
-class BrainTree
+class BrainTree implements IPaymentGateway
 {
     public Gateway $gateway;
 
@@ -19,7 +19,7 @@ class BrainTree
         ]);
     }
 
-    public function generateToken(): string
+    public function generateToken($request): string
     {
         return $this->gateway->clientToken()->generate();
     }
@@ -30,7 +30,7 @@ class BrainTree
             'amount' => $total,
             'paymentMethodNonce' =>  $request->paymentMethodNonce,
             'options' => [
-                'submitForSettlement' => True
+                'submitForSettlement' => true
             ]
         ]);
     }

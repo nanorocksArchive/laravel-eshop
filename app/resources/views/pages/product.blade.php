@@ -193,7 +193,6 @@
 @stop
 @section('js')
     @parent
-    <script src="{{ asset('themes/js/common.js') }}"></script>
     <script>
         $(function () {
             // $('#myTab a:first').tab('show');
@@ -203,11 +202,6 @@
             })
         })
         $(document).ready(function() {
-            $('.thumbnail').fancybox({
-                openEffect  : 'none',
-                closeEffect : 'none'
-            });
-
             $('#myCarousel-2').carousel({
                 interval: 2500
             });
