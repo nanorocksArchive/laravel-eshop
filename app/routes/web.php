@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
+use TCG\Voyager\Facades\Voyager;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,9 +39,9 @@ Route::get('/about', [\App\Http\Controllers\StaticPageController::class, 'about'
 
 // Admin
 
-Route::get('/dashboard', function () {
-    return redirect()->route('admin.orders.index');
-})->middleware(['auth']);
+//Route::get('/dashboard', function () {
+//    return redirect()->route('admin.orders.index');
+//})->middleware(['auth']);
 
 Route::group(['prefix'=>'admin','as'=>'admin.', 'middleware' => ['auth:web']], function(){
     Route::get('/orders', [AdminController::class, 'orders'])->name('orders.index');
@@ -57,4 +58,9 @@ Route::group(['prefix'=>'admin','as'=>'admin.', 'middleware' => ['auth:web']], f
     Route::post('/products', [AdminController::class, 'products']);
     Route::post('/products/{operation}', [AdminController::class, 'products']);
     Route::post('/products/{operation}/{id}', [AdminController::class, 'products']);
+});
+
+
+Route::group(['prefix' => 'admin'], function () {
+    Voyager::routes();
 });
