@@ -18,6 +18,7 @@ class Order extends Model
     const ADDRESS_ID = 'address_id';
     const CUSTOMER_ID = 'customer_id';
     const COMMENT = 'comment';
+    const ADMIN_STATUS = 'admin_status';
 
     protected $fillable = [
         self::HASH,

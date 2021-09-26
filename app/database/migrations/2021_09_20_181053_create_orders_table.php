@@ -21,6 +21,7 @@ class CreateOrdersTable extends Migration
             $table->bigInteger(\App\Models\Order::ADDRESS_ID);
             $table->bigInteger(\App\Models\Order::CUSTOMER_ID);
             $table->string(\App\Models\Order::COMMENT)->nullable();
+            $table->string(\App\Models\Order::ADDRESS_ID)->default('BEFORE_SEND');
             $table->timestamps();
         });
     }
