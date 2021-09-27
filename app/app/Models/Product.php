@@ -46,4 +46,9 @@ class Product extends Model
         return $this->stock >= 1;
     }
 
+    public function productImages(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ProductImage::class, ProductImage::PRODUCT_ID, 'id');
+    }
+
 }

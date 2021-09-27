@@ -19,22 +19,12 @@
                         <a href="{{ $product->image }}" class="thumbnail" data-fancybox-group="group1" title="Description 1">
                             <img alt="" src="{{ asset($product->image) }}"></a>
                         <ul class="thumbnails small">
+                            @foreach($product->productImages as $item)
                             <li class="span1">
-                                <a href="{{ asset('themes/images/ladies/2.jpg') }}" class="thumbnail" data-fancybox-group="group1" title="Description 2">
-                                    <img src="{{ asset('themes/images/ladies/2.jpg') }}" alt=""></a>
+                                <a href="{{ asset($item->image) }}" class="thumbnail" data-fancybox-group="group1" title="Description 2">
+                                    <img src="{{ asset($item->image) }}" alt="{{ $product->title }}"></a>
                             </li>
-                            <li class="span1">
-                                <a href="{{ asset('themes/images/ladies/3.jpg') }}" class="thumbnail" data-fancybox-group="group1" title="Description 3">
-                                    <img src="{{ asset('themes/images/ladies/3.jpg') }}" alt=""></a>
-                            </li>
-                            <li class="span1">
-                                <a href="{{ asset('themes/images/ladies/4.jpg') }}" class="thumbnail" data-fancybox-group="group1" title="Description 4">
-                                    <img src="{{ asset('themes/images/ladies/4.jpg') }}" alt=""></a>
-                            </li>
-                            <li class="span1">
-                                <a href="{{ asset('themes/images/ladies/5.jpg') }}" class="thumbnail" data-fancybox-group="group1" title="Description 5">
-                                    <img src="{{ asset('themes/images/ladies/5.jpg') }}" alt=""></a>
-                            </li>
+                            @endforeach
                         </ul>
                     </div>
                     <div class="span5">

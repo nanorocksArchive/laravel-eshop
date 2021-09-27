@@ -9,11 +9,21 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="#"><strong>Welcome, </strong> {{ Auth::user()->email }}</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.orders.index') }}">Orders</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.products.index') }}">Products</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Models
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" href="{{ route('admin.orders.index') }}">Orders</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('admin.products.index') }}">Products</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('admin.products-images.index') }}">Products Images</a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">

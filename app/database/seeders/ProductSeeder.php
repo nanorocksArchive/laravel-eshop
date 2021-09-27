@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Product;
+use App\Models\ProductImage;
 use Illuminate\Database\Seeder;
 
 class ProductSeeder extends Seeder
@@ -16,7 +17,7 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        Product::create([
+        $product = Product::create([
             Product::TITLE => 'UT WISI ENIM AD',
             Product::SLUG => 'UT-WISI-ENIM-AD',
             Product::DESCRIPTION => self::DESCRIPTION,
@@ -26,7 +27,27 @@ class ProductSeeder extends Seeder
             Product::ADDITIONAL => '{"color":["red","green","blue"],"size":["small","large","medium","extra small"]}'
         ]);
 
-        Product::create([
+        ProductImage::create([
+           ProductImage::PRODUCT_ID => $product->id,
+           ProductImage::IMAGE => 'themes/images/ladies/2.jpg'
+        ]);
+
+        ProductImage::create([
+            ProductImage::PRODUCT_ID => $product->id,
+            ProductImage::IMAGE => 'themes/images/ladies/2.jpg'
+        ]);
+
+        ProductImage::create([
+            ProductImage::PRODUCT_ID => $product->id,
+            ProductImage::IMAGE => 'themes/images/ladies/2.jpg'
+        ]);
+
+        ProductImage::create([
+            ProductImage::PRODUCT_ID => $product->id,
+            ProductImage::IMAGE => 'themes/images/ladies/2.jpg'
+        ]);
+
+        $product = Product::create([
             Product::TITLE => 'QUIS NOSTRUD EXERCI TATION-5',
             Product::SLUG => 'QUIS-NOSTRUD-EXERCI-TATION-5',
             Product::DESCRIPTION => self::DESCRIPTION,
@@ -35,7 +56,22 @@ class ProductSeeder extends Seeder
             Product::STOCK => '5',
         ]);
 
-        Product::create([
+        ProductImage::create([
+            ProductImage::PRODUCT_ID => $product->id,
+            ProductImage::IMAGE => 'themes/images/ladies/3.jpg'
+        ]);
+
+        ProductImage::create([
+            ProductImage::PRODUCT_ID => $product->id,
+            ProductImage::IMAGE => 'themes/images/ladies/3.jpg'
+        ]);
+
+        ProductImage::create([
+            ProductImage::PRODUCT_ID => $product->id,
+            ProductImage::IMAGE => 'themes/images/ladies/3.jpg'
+        ]);
+
+        $product = Product::create([
             Product::TITLE => 'KNOW EXACTLY TURNED',
             Product::SLUG => 'KNOW-EXACTLY-TURNED-3',
             Product::DESCRIPTION => self::DESCRIPTION,
@@ -44,7 +80,28 @@ class ProductSeeder extends Seeder
             Product::STOCK => '10',
         ]);
 
-        Product::create([
+
+        ProductImage::create([
+            ProductImage::PRODUCT_ID => $product->id,
+            ProductImage::IMAGE => 'themes/images/ladies/4.jpg'
+        ]);
+
+        ProductImage::create([
+            ProductImage::PRODUCT_ID => $product->id,
+            ProductImage::IMAGE => 'themes/images/ladies/1.jpg'
+        ]);
+
+        ProductImage::create([
+            ProductImage::PRODUCT_ID => $product->id,
+            ProductImage::IMAGE => 'themes/images/ladies/2.jpg'
+        ]);
+
+        ProductImage::create([
+            ProductImage::PRODUCT_ID => $product->id,
+            ProductImage::IMAGE => 'themes/images/ladies/4.jpg'
+        ]);
+
+        $product = Product::create([
             Product::TITLE => 'YOU THINK FAST 1',
             Product::SLUG => 'YOU-THINK-FAST-1',
             Product::DESCRIPTION => self::DESCRIPTION,
@@ -54,7 +111,17 @@ class ProductSeeder extends Seeder
             Product::ADDITIONAL => '{"color":["red","green","blue"],"size":["small","large","medium","extra small"]}'
         ]);
 
-        Product::create([
+        ProductImage::create([
+            ProductImage::PRODUCT_ID => $product->id,
+            ProductImage::IMAGE => 'themes/images/ladies/1.jpg'
+        ]);
+
+        ProductImage::create([
+            ProductImage::PRODUCT_ID => $product->id,
+            ProductImage::IMAGE => 'themes/images/ladies/1.jpg'
+        ]);
+
+        $product = Product::create([
             Product::TITLE => 'UT WISI ENIM AD 1',
             Product::SLUG => 'UT-WISI-ENIM-AD-1',
             Product::DESCRIPTION => self::DESCRIPTION,
@@ -63,7 +130,22 @@ class ProductSeeder extends Seeder
             Product::STOCK => '10',
         ]);
 
-        Product::create([
+        ProductImage::create([
+            ProductImage::PRODUCT_ID => $product->id,
+            ProductImage::IMAGE => 'themes/images/ladies/1.jpg'
+        ]);
+
+        ProductImage::create([
+            ProductImage::PRODUCT_ID => $product->id,
+            ProductImage::IMAGE => 'themes/images/ladies/1.jpg'
+        ]);
+
+        ProductImage::create([
+            ProductImage::PRODUCT_ID => $product->id,
+            ProductImage::IMAGE => 'themes/images/ladies/1.jpg'
+        ]);
+
+        $product = Product::create([
             Product::TITLE => 'UT WISI ENIM AD 2',
             Product::SLUG => 'UT-WISI-ENIM-AD-2',
             Product::DESCRIPTION => self::DESCRIPTION,
@@ -71,6 +153,16 @@ class ProductSeeder extends Seeder
             Product::IMAGE => 'themes/images/ladies/6.jpg',
             Product::STOCK => '20',
             Product::ADDITIONAL => '{"color":["red","green","blue"],"size":["small","large","medium","extra small"]}'
+        ]);
+
+        ProductImage::create([
+            ProductImage::PRODUCT_ID => $product->id,
+            ProductImage::IMAGE => 'themes/images/ladies/5.jpg'
+        ]);
+
+        ProductImage::create([
+            ProductImage::PRODUCT_ID => $product->id,
+            ProductImage::IMAGE => 'themes/images/ladies/4.jpg'
         ]);
 
         Product::create([

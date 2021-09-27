@@ -58,6 +58,13 @@ Route::group(['prefix'=>'admin','as'=>'admin.', 'middleware' => ['auth:web']], f
     Route::post('/products', [AdminController::class, 'products']);
     Route::post('/products/{operation}', [AdminController::class, 'products']);
     Route::post('/products/{operation}/{id}', [AdminController::class, 'products']);
+
+    Route::get('/products-images', [AdminController::class, 'productsImages'])->name('products-images.index');
+    Route::get('/products-images/{operation}', [AdminController::class, 'productsImages']);
+    Route::get('/products-images/{operation}/{id}', [AdminController::class, 'productsImages']);
+    Route::post('/products-images', [AdminController::class, 'productsImages']);
+    Route::post('/products-images/{operation}', [AdminController::class, 'productsImages']);
+    Route::post('/products-images/{operation}/{id}', [AdminController::class, 'productsImages']);
 });
 
 

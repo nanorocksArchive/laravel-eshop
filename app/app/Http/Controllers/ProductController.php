@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -11,7 +12,7 @@ class ProductController extends Controller
     //
     public function index(string $slug)
     {
-        $product = Product::where(Product::SLUG, $slug)->first();
+        $product = Product::where(Product::SLUG, $slug)->with('productImages')->first();
         if($product == null)
         {
             return redirect()->to('/');
